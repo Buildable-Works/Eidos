@@ -29,7 +29,7 @@ Blueprint/
 ```
 
 - **Product docs** are four files — one of each — that frame the whole product.
-- **Specs** are the many, one per unit, grouped into `<Domain>/` folders. Every spec shares one shape — Intent, Behaviors & Acceptance Criteria, Out of Scope, and the rest; the fields at the top are the firm part, the body is guidance.
+- **Specs** are the many, one per unit, grouped into `<Domain>/` folders. Every spec shares one rough shape — Intent, Behaviors & Acceptance Criteria, Out of Scope, and the rest, used as they apply; the fields at the top are the firm part, the body is guidance you keep what you need of.
 - **Templates** ship with the standard — bundled in the plugin, and at the standard's own top-level `templates/`. The skills fill from them; you never keep a `templates/` folder in your product repo.
 - Human-facing names are **Title Case** (the tree reads like a table of contents); the `id` inside each spec — lowercase words joined by hyphens — is its permanent reference.
 
@@ -39,7 +39,7 @@ The full rules are in **[EIDOS.md](EIDOS.md)**. See **[`example/`](example/)** f
 
 Use Eidos on your own project:
 
-1. **Get the skills.** Install `eidos` (author + validate), `eidos-init` (scaffold a new registry), and `eidos-migrate` (move specs to a new version) — see [Installing the skills](#installing-the-skills). Or work by hand from [`EIDOS.md`](EIDOS.md) and the standard's [`templates/`](templates/) (from a clone — you don't keep them in your project).
+1. **Get the skills.** Install `eidos` (author + validate), `eidos-format` (shape a rough draft), `eidos-init` (scaffold a new registry), and `eidos-migrate` (move specs to a new version) — see [Installing the skills](#installing-the-skills). Or work by hand from [`EIDOS.md`](EIDOS.md) and the standard's [`templates/`](templates/) (from a clone — you don't keep them in your project).
 2. **Initialize.** Run `eidos-init`: it scaffolds a `Blueprint/` from the standard's templates, following the current `EIDOS.md` — no copying the example and deleting its contents. (By hand: make a `Blueprint/` folder, copy the four product-doc templates and `Domains.md` from the standard's [`templates/`](templates/), and add a `Specs/` folder.)
 3. **Fill the product docs.** Architecture, Audience, Criteria, Market — prose, loose, point-in-time; fill what's known, leave the rest. Describe each domain in `Domains.md` as specs accrue.
 4. **Author specs.** One file per unit under `Specs/<Domain>/`, named for its title in Title Case (`Magic Link Sign-In.md`). Lead with Intent and Behaviors & Acceptance Criteria; press hard on **Out of Scope** — that's where scope is held. The `eidos` skill facilitates; it does not author for you.
@@ -49,9 +49,10 @@ See [`example/`](example/) for a filled-in registry to pattern-match against.
 
 ## Installing the skills
 
-Eidos ships as a **Claude plugin** bundling three skills:
+Eidos ships as a **Claude plugin** bundling four skills:
 
 - **`eidos`** — author + validate
+- **`eidos-format`** — reshape a rough draft into the spec shape
 - **`eidos-init`** — scaffold a new registry
 - **`eidos-migrate`** — move specs to a new version
 
@@ -75,7 +76,7 @@ No build step: the plugin reads `EIDOS.md`, `templates/`, `versions/`, and `CHAN
 
 ### In Claude Desktop (and web / Cowork)
 
-Desktop runs each skill **scoped to its own folder** — it can't reach sibling files at the plugin root, and there's no `${CLAUDE_PLUGIN_ROOT}` like in Claude Code. So `eidos-init` (needs `templates/`) and `eidos-migrate` (needs the version history) only work if those assets sit **inside their own folders**. One script handles that and builds the zip:
+Desktop runs each skill **scoped to its own folder** — it can't reach sibling files at the plugin root, and there's no `${CLAUDE_PLUGIN_ROOT}` like in Claude Code. So `eidos`, `eidos-format`, and `eidos-init` (all need `templates/`) and `eidos-migrate` (needs the version history) only work if those assets sit **inside their own folders**. One script handles that and builds the zip:
 
 ```
 ./scripts/package-plugin.sh        # → dist/eidos-plugin.zip

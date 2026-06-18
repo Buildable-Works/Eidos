@@ -8,7 +8,8 @@ created: 2026-06-16
 modified: 2026-06-17
 eidos_version: 2.0.0
 owner: brenton
-depends_on: [session-management]
+depends_on:
+  - "[Session Management](../Identity/Session%20Management.md)"
 tags: [capture, reading]
 ---
 
@@ -55,7 +56,7 @@ Intend to acknowledge a save by persisting the URL synchronously, then hand fetc
 
 ## Dependencies
 
-- **Session Management** (`depends_on: session-management`) — a save is attributed to the signed-in user who made it.
+- [Session Management](../Identity/Session%20Management.md) — a save is attributed to the signed-in user who made it.
 - An article fetcher/extractor that produces the readable snapshot in AC3.
 - Object storage for the stored snapshots.
 

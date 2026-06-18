@@ -8,7 +8,7 @@ The Eidos standard — a markdown spec registry where one file completely define
 
 A **spec** is a living markdown document that defines one unit of a product completely: "this is what you're getting," with no ambiguity. A spec is true whether or not the thing it describes has been built. It captures **state and intent, not work**. Tasks describe work and die when the work ships; a spec describes the product and stays accurate across its whole life: drafted, built, deprecated.
 
-"Spec" names the artifact. What it specifies is a field (`type`), not a different kind of document. Every spec carries the same shape regardless of its `type`.
+"Spec" names the artifact. What it specifies is a field (`type`), not a different kind of document. Every spec draws on the same rough shape regardless of its `type`.
 
 ## A human-first standard
 
@@ -21,7 +21,7 @@ An agent's role is **facilitation, not authorship**. It formats, supplements, fi
 Eidos holds two kinds of document. They behave differently on purpose.
 
 - **Product docs** — one of each, at the top of the product: `Architecture.md`, `Audience.md`, `Criteria.md`, `Market.md`, plus a derived `Domains.md` that lists the domains. The four authored docs are prose, deliberately loose, and point-in-time. They set the frame every spec is judged against: who it serves, what it must respect, where it sits in the market, what it can afford.
-- **Specs** are the many. One per unit of the product, grouped into domains under `Specs/`. They share one uniform shape (see [Spec frontmatter](#spec-frontmatter) and [Spec body](#spec-body)).
+- **Specs** are the many. One per unit of the product, grouped into domains under `Specs/`. They share one shape — a small required frontmatter and a set of body sections in a consistent order (see [Spec frontmatter](#spec-frontmatter) and [Spec body](#spec-body)).
 
 Product docs drive decisions and audit scope. Specs capture the units that result. When defining a _whole product_, reach for product docs. When defining a _piece_ of it, reach for a spec.
 
@@ -47,6 +47,10 @@ If one repository holds several products, nest them as `Blueprint/<name>/...`, e
 ### Naming
 
 Everything a human reads in the file tree is **Title Case**, because the tree is a table of contents: product docs (`Architecture.md`), domain folders (`Identity/`), and spec files (`Magic Link Sign-In.md`). A spec's filename is its title and may be renamed freely; the part that never changes is the `id` _inside_ the file — lowercase words joined by hyphens (`Magic Link Sign-In.md` carries `id: magic-link-signin`). The `domain` value is Title Case to match its folder. Fields meant for tools (`status`, `type`, `tags`) are not names in the file tree, so they stay as written.
+
+### Referencing other specs
+
+Links to other specs and sections are encouraged — they read well and you can follow them, where a bare name is neither. Standard markdown links are the best format for compatibility across editors and tools. This extends to the properties that point at other specs: `depends_on` holds links too, not bare ids — each spec's `id` stays its permanent identity behind them.
 
 ### Templates ship with the standard
 
@@ -88,12 +92,14 @@ The frontmatter — the fields at the very top of the file, between the `---` li
 | --------------- | ------------ | --------------------------------------------------------------------------------------------------------------------- |
 | `eidos_version` | string       | The Eidos version this doc targets, e.g. `2.0.0`. Optional but recommended — it makes migration and tooling reliable. |
 | `owner`         | string       | Who answers questions about this spec.                                                                                |
-| `depends_on`    | list of `id` | Specs this one needs to function. The machine-readable subset of Dependencies.                                        |
+| `depends_on`    | list of links | Specs this one needs to function, each a link to that spec (same markdown form as prose). The `id` inside each linked spec stays its permanent identity. |
 | `tags`          | list         | Free tags.                                                                                                            |
 
 ## Spec body
 
-Recommended, not required. This is the suggested part — guidance, not rules. Present these sections in this order when present. A spec in progress, or one where a section genuinely does not apply, may omit any of them. The headings exist to help fully capture scope, not to block a half-formed spec. A check may note a missing recommended section and offer to fill it; it never refuses the file.
+The body is the guided part of a spec — the frontmatter above is the firm contract — but it is not a free-for-all. The sections below have a set order and set names, and keeping to them is strongly encouraged, close to required: a reader should always know where to look. What you may do is leave a section out when it genuinely doesn't apply (no Open Questions & Assumptions heading when you have none); what you should not do is reorder them, rename them, or invent a parallel layout. A check may note a missing recommended section and offer to fill it; it never refuses the file.
+
+Within a section, shape the content to fit — don't just pour text in. Add your own `###`/`####` sub-headings, tables, lists, code blocks, or small diagrams wherever they make the meaning clearer, and never flatten rich content onto a single line. A data model reads better as a table than a sentence; a sequence reads better as a numbered list. The result should read like a person wrote it, not like a filled-in form.
 
 - **Intent** — why this exists, the problem and who has it. One or two paragraphs. Stable. If Intent changes substantially, you probably have a different spec.
   - **Implementation Notes** _(optional, nested under Intent)_ — the _intent_ of the implementation: the approach you mean to take and why. Direction, not status — how you intend to build it, never how far along it is. This is where the HOW lives, and it stays intent rather than work: a note that you mean to build on the existing queue, not a record of what has been built. Omit when the approach is obvious or undecided.
@@ -110,19 +116,21 @@ These are the load-bearing conventions.
 
 1. **The frontmatter is the agreement; the body is guidance.** The fields at the top are checked. Body sections are recommended structure, not requirements.
 2. **Portability over prescription.** Recommended sections may be omitted when a doc is in progress or genuinely does not apply. Note a missing section and offer to fill it; never refuse the file for it.
-3. **One shape for specs, always.** Every spec carries the same body sections regardless of its `type`. Requirement categories are sub-headings _inside_ Behaviors & Acceptance Criteria, never separate top-level sections and never a different shape. The `type` never changes which sections a spec has.
-4. **`type` is an open, soft label.** Humans choose it. It drives views and filtering, never structure. An off-list value is valid.
-5. **`domain` is the grouping.** Required, soft, descriptive. Matches the folder. An unknown domain is valid — warn and offer to register it, don't block.
-6. **`id` is permanent.** Stable, unique, kebab-case, assigned once, never renamed. Rename `title` freely.
-7. **Intent is stable; Behaviors & Acceptance Criteria evolve.** Editing behaviors is routine. If Intent changes substantially, ask whether this is a different spec.
-8. **Out of Scope carries the most weight.** It is where scope management actually happens. The strongest recommended section, but still not a hard gate.
-9. **Acceptance Criteria are labeled `AC{n}:`** — in bold, e.g. `**AC1:**`. Unique within a spec for reference, not across the whole set; just a way to point at a criterion, not IDs that mean anything outside the spec.
-10. **Implementation Notes are intent, not status.** They capture how you mean to build a thing and why — never how far along it is. The moment they read like a progress report, they have become work and will rot.
-11. **No work-tracking fields.** No `sprint`, `estimate`, or `assignee`. The moment you add them, a spec becomes a task and rots. Bridge to a tracker with a link.
-12. **`created` is set once; `modified` tracks the last change.** Both `YYYY-MM-DD`. Git holds the full edit history; these two are the at-a-glance dates.
-13. **Product docs are point-in-time.** Criteria, Market, and Audience capture a snapshot of intent and are expected to evolve.
-14. **The human authors; the agent facilitates.** Intent, scope, and decisions stay with the person. An agent formats, supplements, asks, and holds scope; it does not generate finished specs or set direction. A spec no one thought through is worse than none.
-15. **Human-facing names are Title Case.** Folders, product docs, and spec files read like a table of contents. The kebab-case `id`, not the filename, is the permanent reference.
+3. **Write it like a human would read it.** The recommended sections are a scaffold for a complete, living definition — not a form to pour text into. Reshape within and beneath them to fit the content: add your own `###`/`####` sub-headings, tables, lists, code blocks, or small diagrams wherever they make the meaning clearer, and never flatten rich content onto one line. A data model belongs in a table, a sequence in a numbered list. Keep acceptance criteria short and observable; push supporting detail — schemas, payloads, models — into a table or sub-section the criterion points to. If a spec reads like filled-in boilerplate, reshape it until it reads like someone wrote it.
+4. **Reference other specs with links, not bare names — in prose and in properties.** Point at another spec, doc, or section with a markdown link — it reads well and you can follow it, where a name in backticks is neither. The same goes for frontmatter that points out, like `depends_on`: link the specs there too. Each spec's `id` is still its permanent identity, sitting behind the link.
+5. **One shared shape, in a predictable order.** Every spec uses the same sections, in the same order and under the same names, so a reader always knows where to look. This consistency is strongly encouraged — close to required: a registry where each spec invents its own layout is one no one can read. What flexes is _which_ sections appear, not their order or names — leave a section out when it genuinely doesn't apply (no Open Questions & Assumptions heading when you have none), but don't reorder them, rename them, invent a parallel layout, or fork the shape by `type`. Requirement categories stay sub-headings _inside_ Behaviors & Acceptance Criteria, never new top-level sections; formatting within a section is free.
+6. **`type` is an open, soft label.** Humans choose it. It drives views and filtering, never structure. An off-list value is valid.
+7. **`domain` is the grouping.** Required, soft, descriptive. Matches the folder. An unknown domain is valid — warn and offer to register it, don't block.
+8. **`id` is permanent.** Stable, unique, kebab-case, assigned once, never renamed. Rename `title` freely.
+9. **Intent is stable; Behaviors & Acceptance Criteria evolve.** Editing behaviors is routine. If Intent changes substantially, ask whether this is a different spec.
+10. **Out of Scope carries the most weight.** It is where scope management actually happens. The strongest recommended section, but still not a hard gate.
+11. **Acceptance Criteria are labeled `AC{n}:`** — in bold, e.g. `**AC1:**`. Unique within a spec for reference, not across the whole set; just a way to point at a criterion, not IDs that mean anything outside the spec.
+12. **Implementation Notes are intent, not status.** They capture how you mean to build a thing and why — never how far along it is. The moment they read like a progress report, they have become work and will rot.
+13. **No work-tracking fields.** No `sprint`, `estimate`, or `assignee`. The moment you add them, a spec becomes a task and rots. Bridge to a tracker with a link.
+14. **`created` is set once; `modified` tracks the last change.** Both `YYYY-MM-DD`. Git holds the full edit history; these two are the at-a-glance dates.
+15. **Product docs are point-in-time.** Criteria, Market, and Audience capture a snapshot of intent and are expected to evolve.
+16. **The human authors; the agent facilitates.** Intent, scope, and decisions stay with the person. An agent formats, supplements, asks, and holds scope; it does not generate finished specs or set direction. A spec no one thought through is worse than none.
+17. **Human-facing names are Title Case.** Folders, product docs, and spec files read like a table of contents. The kebab-case `id`, not the filename, is the permanent reference.
 
 ## Domains (`Domains.md`)
 
@@ -145,18 +153,37 @@ Money in, money out, what they're entitled to.
 - `Domains.md` never blocks anything. It only annotates.
 - Regenerable: crawl every spec's `domain`, rebuild the headings, keep the hand-written descriptions.
 
-## Validation
-
-When checking a spec:
-
-1. Check the **required fields**: present and well-formed (`id` kebab-case, `created`/`modified` as `YYYY-MM-DD`). A `status` outside the suggested baseline warns but does not fail. These are the only true failures.
-2. Check the **body** against recommended sections and report what is missing as _suggestions_, flagging an absent **Out of Scope** most prominently. Note if acceptance criteria lack `AC{n}` labels and offer to add them.
-3. Confirm no work-tracking fields have crept in, and that Implementation Notes read as intent rather than progress.
-4. Surface, don't enforce. The output is a review a human acts on, not a blocker.
-
 ## Versioning
 
 - Semantic Versioning (`MAJOR.MINOR.PATCH`). Major bumps for breaking changes, minor for backward-compatible additions, patch for clarifications.
 - This file is 2.0.0. On each release, the outgoing `EIDOS.md` is preserved in `versions/` under its full semver name (e.g. `versions/v1.0.0.md`) before this file is edited in place. Because every version is frozen there, any two — even non-adjacent — can be diffed to migrate specs between them (see the `eidos-migrate` skill).
 - See `CHANGELOG.md` for history and migrations.
 - Tools may reject if the version in this file is unsupported.
+
+## AI
+
+_This section is for an AI assistant working in an Eidos registry. A human can stop above — the rest is operating detail._
+
+If the Eidos skills are installed (`eidos` to author and validate, `eidos-init` to scaffold, `eidos-migrate` to upgrade versions), prefer them — they carry the templates and version history and go deeper than this. This section is the fallback, so Eidos never depends on them: it is enough to work from `EIDOS.md` alone.
+
+**Facilitate, don't author.** Eidos is human-first. Format and structure what the owner gives you, supplement, ask clarifying questions, and press on Out of Scope — but never invent Intent, decide direction, or hand back a finished spec to rubber-stamp. When unsure, ask. A spec the owner didn't think through is worse than none.
+
+**Authoring a spec:**
+
+1. Build from the [frontmatter contract](#spec-frontmatter) and the [body order](#spec-body) above (or `templates/Spec Template.md`, if you have it). Name the file for its Title Case title; put a permanent kebab-case `id` inside.
+2. Fill the frontmatter from what the owner tells you; set `created`/`modified` to today. Don't guess a `status` or invent an `owner`.
+3. Lead with **Intent** and **Behaviors & Acceptance Criteria** — short, observable criteria labeled `**AC1:**`, `**AC2:**`… Press hard on **Out of Scope**. Capture the rest as it surfaces; omit a section that doesn't apply, but keep the standard order and names.
+4. Where the owner is vague, ask — don't fill the gap with plausible prose. Push rich detail (a data model, a payload) into a table or sub-section rather than onto an AC line.
+
+**Authoring a product doc:** pick Architecture, Audience, Criteria, or Market and start from its template. Prose, loose, point-in-time — fill what's known, leave the rest.
+
+**Validating a spec:** the frontmatter is the only hard part. Check the required fields are present and well-formed (`id` kebab-case, `created`/`modified` as `YYYY-MM-DD`; a `status` off the baseline warns, never fails) — those are the only true failures. Report missing body sections as suggestions, flagging an absent **Out of Scope** first, and note acceptance criteria that lack `**AC{n}:**` labels. Confirm no work-tracking fields crept in and that Implementation Notes read as intent, not progress. Surface, don't block — the output is a review the human acts on.
+
+**Linking other specs:** a relative markdown link with spaces as `%20` — `[Session Management](../Identity/Session%20Management.md)`; add a `#heading` anchor for a section (GitLab/GitHub lowercase-and-hyphenate the heading; an Obsidian vault uses the literal heading text). Linking properties like `depends_on` use the same link, one markdown-link string per entry — quote it in YAML, since a leading `[` starts a list:
+
+```yaml
+depends_on:
+  - "[Session Management](../Identity/Session%20Management.md)"
+```
+
+The linked spec's `id` is its permanent identity. If a dependency has no spec yet, name it plainly — a bare `id` in `depends_on`, no fabricated link.

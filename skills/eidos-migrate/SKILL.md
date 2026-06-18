@@ -44,7 +44,7 @@ Migration needs the version snapshots, the changelog's migration notes, and the 
 5. **Apply per file**, once the plan is agreed:
 
    - Rename and remap frontmatter; drop removed fields _after_ surfacing any content they held; add newly-required fields (leave values for the human where they can't be derived, e.g. `created`).
-   - Restructure the body: rename/merge/split sections, apply labeling, and add new recommended sections as empty stubs flagged for the human to fill — never invent their contents.
+   - Restructure the body: rename/merge/split sections, apply labeling, and add new recommended sections only as clearly-flagged empty stubs the human can fill or delete (the shape is a framework, not a checklist) — never invent their contents.
    - Apply structural/naming changes (e.g. `product/` → `Blueprint/`, `Domains.md` list → sub-headings) across the registry.
 
 6. **Validate.** Run the `eidos` validation pass against the **target** contract and report remaining gaps as suggestions, not failures.

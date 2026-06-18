@@ -12,14 +12,14 @@ Eidos is a spec registry. It holds the authoritative definition of what a produc
 
 A spec is a living document describing one unit of a product completely. It answers "this is what you're getting" with no ambiguity. It is not a task. Tasks describe work and die when the work ships. A spec describes the product and stays accurate across its whole life: drafted, built, deprecated.
 
-Every spec shares one uniform shape, regardless of what it describes. See Spec Schema.
+Every spec uses the same shape, regardless of what it describes — a small required frontmatter and a set of body sections in a fixed order. Which sections appear flexes (omit what doesn't apply); their order and names don't, so every spec reads predictably. See Spec Schema.
 
 ## Two tiers of document
 
 Eidos holds two classes of document. They behave differently on purpose.
 
 - **Product docs** sit at the product root: Architecture, Audience, Criteria, Market — one of each per product. They are prose, deliberately loose, and they describe the whole. They set the frame every spec is judged against: who it serves, what it must respect, where it sits in the market, what it can afford.
-- **Specs** are the many. One per unit of the product, grouped into domains under `Specs/`. They share one uniform shape. See Spec Schema.
+- **Specs** are the many. One per unit of the product, grouped into domains under `Specs/`. They share one shape in a consistent order — sections omitted when they don't apply, but never reordered into a free-for-all. See Spec Schema.
 
 Product docs drive decisions and audit scope. Specs capture the units that result.
 

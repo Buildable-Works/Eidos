@@ -49,7 +49,7 @@ Intend to reuse the existing `email-delivery` capability rather than stand up a 
 
 ## Dependencies
 
-- **Email delivery** (`depends_on: email-delivery`) — the transactional sender that puts the link in the user's inbox. Sign-in is only as reliable as it is.
+- **Email delivery** — the transactional sender that puts the link in the user's inbox; sign-in is only as reliable as it is. No spec of its own here, so there's nothing to link; it's carried in `depends_on` as `email-delivery`.
 - A session store to hold the session that AC3 starts.
 
 ## Testing

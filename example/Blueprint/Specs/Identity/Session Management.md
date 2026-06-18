@@ -8,7 +8,8 @@ created: 2026-06-16
 modified: 2026-06-17
 eidos_version: 2.0.0
 owner: brenton
-depends_on: [magic-link-signin]
+depends_on:
+  - "[Magic Link Sign-In](Magic%20Link%20Sign-In.md)"
 tags: [auth, session]
 ---
 
@@ -49,7 +50,7 @@ Intend to keep sessions as server-side records keyed by an opaque cookie token. 
 
 ## Dependencies
 
-- **Magic Link Sign-In** (`depends_on: magic-link-signin`) — currently the only way a session is started.
+- [Magic Link Sign-In](Magic%20Link%20Sign-In.md) — currently the only way a session is started.
 - A session store that supports immediate deletion, for the revocation in AC4.
 
 ## Testing

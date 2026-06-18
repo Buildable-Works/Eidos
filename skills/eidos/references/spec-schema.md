@@ -30,14 +30,15 @@ The contract every spec follows. Skills validate against this. Two parts: frontm
 | --- | --- | --- |
 | `eidos_version` | string | The Eidos version this doc targets, e.g. `2.0.0`. Optional but recommended — aids migration and tooling. |
 | `owner` | string | Who answers questions about this spec. |
-| `depends_on` | list of `id` | Specs this one needs to function. The machine-readable subset of Dependencies. |
+| `depends_on` | list of links | Specs this one needs, each a link to that spec (a markdown-link string, quoted in YAML). The linked spec's `id` stays its permanent identity. |
 | `tags` | list | Free tags. |
 
 ### Rules
 
-- `type` is never branched on for structure. Every spec has the same body shape no matter its type. Requirement categories are sub-headings _inside_ Behaviors & Acceptance Criteria, never structural variants.
+- `type` is never branched on for structure. Every spec draws on the same rough body shape no matter its type — though the sections are recommended, not required (see Body sections): use what applies and omit the rest. Requirement categories are sub-headings _inside_ Behaviors & Acceptance Criteria, never structural variants.
 - `domain` is soft. An unknown domain is valid; a skill may warn and offer to register it.
 - `id` is permanent. Rename `title` freely; never rename `id`.
+- Reference other specs as markdown links (relative path, `#heading` for a section), never bare `code-style` names — in prose and in linking properties like `depends_on` (a quoted markdown-link string per entry). Each linked spec's `id` stays its permanent identity.
 - `status` is a soft baseline, not a fixed list; an off-list value warns rather than fails.
 - Acceptance criteria are labeled `AC{n}`, unique within a spec for reference — not across the registry.
 - Implementation Notes are intent, not status: how you mean to build a thing, never how far along it is.
@@ -45,7 +46,9 @@ The contract every spec follows. Skills validate against this. Two parts: frontm
 
 ## Body sections
 
-Recommended, not required. This is the suggestive part of the contract. The sections below are the shape a thorough spec takes; present them in this order when present. A spec in progress, or one where a section genuinely does not apply, may omit any of them. The headings exist to help you fully capture scope, not to block a half-formed spec from being written. A skill may note a missing recommended section and offer to fill it; it never refuses the file. The hard contract is the frontmatter; the body is guidance. See Core Overview on portability.
+The body is guidance, not contract — the frontmatter is the firm part — but it is not a free-for-all. The sections below have a set order and set names; keeping to them is strongly encouraged, close to required, so every spec reads predictably. You may leave a section out when it genuinely doesn't apply (no Open Questions heading when there are none); you should not reorder them, rename them, or invent a parallel layout. A skill may note a missing recommended section and offer to fill it; it never refuses the file. See Core Overview on portability.
+
+Within a section, shape the content to fit — don't just pour text in. Add `###`/`####` sub-headings, tables, lists, or code blocks wherever they read clearer, and never flatten rich content onto one line — a data model is a table, not a sentence; a sequence is a numbered list. Keep acceptance criteria short and observable, with rich detail pushed into a table or sub-section the criterion points to. The result should read like a person wrote it.
 
 ### Intent
 
@@ -61,7 +64,7 @@ Unresolved questions, and the assumptions you're proceeding on. Placed high, rig
 
 ### Behaviors & Acceptance Criteria
 
-What it does, as observable outcomes. This is the "this is what you're getting" section. If a behavior is not listed here, it is not promised. Label each criterion **AC1:**, **AC2:**, … — bold with a colon, unique within this spec for reference. Group criteria under the requirement categories that apply, as `###` sub-headings — **Functional** (features, behaviors, business rules), **Performance** (speed, throughput, capacity, concurrent users), **Design** (mandated tech, standards, regulatory rules, platform limits), **External interface** (how it connects to users, hardware, other software, networks — UI, APIs, protocols), and **Quality attributes** (the other -ilities: reliability, security, usability, maintainability, scalability, portability). The sub-headings are suggestive; use what fits. AC numbers run continuously across them. Prose or Given/When/Then, your call. Evolves freely.
+What it does, as observable outcomes. This is the "this is what you're getting" section. If a behavior is not listed here, it is not promised. Label each criterion **AC1:**, **AC2:**, … — bold with a colon, unique within this spec for reference. Group criteria under the requirement categories that apply, as `###` sub-headings — **Functional** (features, behaviors, business rules), **Performance** (speed, throughput, capacity, concurrent users), **Design** (mandated tech, standards, regulatory rules, platform limits), **External interface** (how it connects to users, hardware, other software, networks — UI, APIs, protocols), and **Quality attributes** (the other -ilities: reliability, security, usability, maintainability, scalability, portability). The sub-headings are suggestive; use what fits. AC numbers run continuously across them. Keep each criterion a short, checkable statement; when the detail is rich — a data model, a payload, a state table — put it in a table or a `####` sub-heading and have the AC reference it rather than cramming it onto the line. Prose or Given/When/Then, your call. Evolves freely.
 
 ### Out of Scope
 
@@ -69,7 +72,7 @@ Explicit non-goals. The section the standard leans on hardest, because this is w
 
 ### Dependencies
 
-Dependencies of any kind that must be known to build or run the unit: external services, libraries, teams, data sources, other specs. The `depends_on` frontmatter is the machine-readable spec-id subset of what is documented here.
+Dependencies of any kind that must be known to build or run the unit: external services, libraries, teams, data sources, other specs. The `depends_on` frontmatter is the spec-only subset of what is documented here, each entry a link to that spec. Reference other specs as markdown links — `[Session Management](../Identity/Session%20Management.md)`, with a `#heading` anchor for a section — never a bare `code-style` name.
 
 ### Testing
 

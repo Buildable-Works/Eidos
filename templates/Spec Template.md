@@ -14,6 +14,8 @@ tags: []
 
 # {{title}}
 
+_Keep the sections that apply and delete the rest, but leave the order and headings as they are — a reader should know what to expect from any spec._
+
 ## Intent
 
 Why this exists. The problem and who has it. One or two paragraphs. Keep it stable.
@@ -28,11 +30,12 @@ Unresolved questions, and the assumptions you're proceeding on. Kept high so the
 
 ## Behaviors & Acceptance Criteria
 
-What it does, as observable outcomes. If it is not here, it is not promised. Label each criterion **AC1:**, **AC2:**, … — numbered continuously and unique within this spec, for reference. Group under the requirement types that apply; the sub-headings are suggestive, use what fits.
+What it does, as observable outcomes. If it is not here, it is not promised. Label each criterion **AC1:**, **AC2:**, … — numbered continuously and unique within this spec, for reference. Group under the requirement types that apply; the sub-headings are suggestive, use what fits. Keep each AC short and checkable; when the detail is rich (a data model, a payload, a state table), put it in a table or a `####` sub-heading and have the AC point to it — don't cram it onto the line.
 
 ### Functional
 
 - **AC1:** <!-- what the system must do: features, behaviors, business rules -->
+<!-- Rich detail (a data model, a payload) → a table or a #### sub-heading the AC points to, not a long AC line. -->
 
 ### Performance
 
@@ -56,7 +59,7 @@ Explicit non-goals. Do not skip this. This is where scope is held.
 
 ## Dependencies
 
-Anything this needs to build or run: services, libraries, teams, data, other specs. The `depends_on` field at the top is the short list of just the spec IDs from what you list here.
+Anything this needs to build or run: services, libraries, teams, data, other specs. List the spec dependencies in `depends_on` at the top as links too (same markdown form). Reference other specs as markdown links — `[Session Management](../Identity/Session%20Management.md)` — never bare names.
 
 ## Testing
 

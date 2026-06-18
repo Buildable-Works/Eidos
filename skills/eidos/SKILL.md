@@ -16,7 +16,7 @@ This matters concretely: if you generate a finished spec, the owner is left rubb
 
 **Do:**
 
-- Format and structure what the user gives you into the standard's shape.
+- Format and structure what the user gives you into the standard's shape — and shape that to the content: branch into sub-headings, tables, and lists so it reads like a person wrote it, never a wall of one-line template fills.
 - Supplement: tighten wording, surface inconsistencies, fill in obvious mechanics.
 - Ask clarifying questions — especially about scope and non-goals.
 - Press on **Out of Scope**: prompt for what the product will _not_ do.
@@ -40,7 +40,7 @@ Help the user author, structure, and validate documents to the Eidos standard. F
 Eidos holds two classes of document. They behave differently on purpose.
 
 - **Product docs** — one of each at the product root: `Architecture.md`, `Audience.md`, `Criteria.md`, `Market.md`. They are prose, deliberately loose, point-in-time. They set the frame every spec is judged against — who it serves, what it must respect, where it sits in the market, what it can afford. Fill them from the standard's templates (see **Where the templates live** below).
-- **Specs** are the many. One per unit of the product, grouped into domains under `Specs/`. They share one uniform shape — the schema in `references/spec-schema.md`. Fill from the standard's `Spec Template.md` (see **Where the templates live**); worked example in `references/example-spec.md`.
+- **Specs** are the many. One per unit of the product, grouped into domains under `Specs/`. They share one shape — the schema in `references/spec-schema.md` (a small required frontmatter, and body sections in a consistent order, used as they apply). Fill from the standard's `Spec Template.md` (see **Where the templates live**); worked example in `references/example-spec.md`.
 
 Product docs drive decisions and audit scope. Specs capture the units that result. When a user is defining a _whole product_, reach for product docs. When they're defining a _piece_ of it, reach for a spec.
 
@@ -62,13 +62,13 @@ These are the load-bearing conventions. Internalize them before authoring.
 
 2. **Portability over prescription.** The standard is suggestive. Recommended sections may be omitted when a doc is in progress or a section genuinely does not apply. The structure exists to help fully capture scope, not to block a half-formed thought from being written down. Note a missing recommended section and offer to fill it; never refuse the file for it.
 
-3. **One shape for specs, always.** Every spec carries the same body sections regardless of its `type`. Never branch structure on `type`. This is what lets a single validator and a single reader's-eye work across the whole registry.
+3. **One shared shape, in a predictable order.** Every spec uses the same sections, in the same order and under the same names — strongly encouraged, close to required, so any spec reads predictably and never forks by `type`. What flexes is presence, not order: omit a section that genuinely doesn't apply, but don't rename, reorder, or invent a parallel layout. That consistency is what lets a single validator and a single reader's-eye work across the whole registry.
 
 4. **`type` is an open label.** Humans choose it (`feature`, `capability`, `domain`, `integration`, or invent one). It drives views and filtering, never structure.
 
 5. **`domain` is the grouping.** Required, soft, descriptive. Title Case, matching the folder under `Specs/`. An unknown domain is valid — warn and offer to register it, don't block.
 
-6. **`id` is permanent.** Stable, unique, kebab-case, assigned once, never renamed. References point at it. Rename `title` freely.
+6. **`id` is permanent.** Stable, unique, kebab-case, assigned once, never renamed; it stays a spec's identity behind any link to it. Reference specs with markdown links — in prose and in linking properties like `depends_on` — not bare names. Rename `title` freely.
 
 7. **Intent is stable; Behaviors & Acceptance Criteria evolve.** Editing behaviors is routine. If Intent changes substantially, ask: is this a different spec now?
 
@@ -99,16 +99,26 @@ Blueprint/
 
 `Blueprint/` is the overarching root; its name is low-stakes and renameable because nothing in a spec points at it by path. Domains are folders under `Specs/`. Relationships between specs (`depends_on`) live in frontmatter so the folder choice stays low-stakes.
 
-Human-facing names are Title Case — folders, product docs, and spec files read like a table of contents. A spec's filename is its title and renames freely; the kebab-case `id` _inside_ the file is its permanent reference (`Magic Link Sign-In.md` carries `id: magic-link-signin`). The `domain` value is Title Case to match its folder.
+Human-facing names are Title Case — folders, product docs, and spec files read like a table of contents. A spec's filename is its title and renames freely; the kebab-case `id` _inside_ the file is its permanent reference (`Magic Link Sign-In.md` carries `id: magic-link-signin`). The `domain` value is Title Case to match its folder. Reference other specs with links, not bare names — see **Referencing other specs** below.
+
+## Referencing other specs
+
+The standard says: link to other specs, don't name them in prose. The mechanics are yours to get right:
+
+- **To a file** — a relative markdown link with spaces encoded as `%20`, so it resolves everywhere: `[Session Management](../Identity/Session%20Management.md)`.
+- **To a section** — add the heading anchor: `[Magic Link Sign-In — Out of Scope](Magic%20Link%20Sign-In.md#out-of-scope)`. The anchor format is renderer-specific — GitLab/GitHub lowercase the heading and turn spaces into hyphens; an Obsidian vault uses the literal heading text — so prefer a file-level link when a doc has to read well in both.
+- **`depends_on` holds links too** — each entry a markdown-link string, quoted in YAML since a leading `[` starts a list (e.g. `- "[Session Management](../Identity/Session%20Management.md)"`). The linked spec's `id` stays its permanent identity; keep it in sync with the prose Dependencies. A dependency with no spec yet stays a bare `id`, not a fabricated link.
+- **No target yet** — if you're pointing at a spec that doesn't exist (an external dependency, or one not written), name it plainly and say so; don't fabricate a link to a missing file.
+- **Obsidian vaults** — `[[Session Management#Out of Scope]]` wikilinks are even more navigable there, but standard markdown links are the portable default.
 
 ## Authoring a spec (with the user, not for them)
 
 1. Read `references/spec-schema.md` for the full frontmatter contract and section meanings. Read `references/example-spec.md` to see it done well.
 2. Start from the standard's `Spec Template.md` (resolved per **Where the templates live** — never the working directory). Name the file for its title in Title Case (`Magic Link Sign-In.md`); the kebab-case `id` inside is the permanent reference.
-3. Fill frontmatter from what the user tells you: a permanent kebab-case `id`, a `title`, a `type`, a Title Case `domain` (matching the folder), a `status`, and `created`/`modified` dates. Add optional fields (`owner`, `depends_on`, `tags`) when the user supplies them.
+3. Fill frontmatter from what the user tells you: a permanent kebab-case `id`, a `title`, a `type`, a Title Case `domain` (matching the folder), a `status`, and `created`/`modified` dates. Add optional fields when the user supplies them: `owner`, `tags`, and `depends_on` (each entry a link to the spec, per **Referencing other specs**).
 4. Capture the body from the user's intent — don't supply it for them. Lead with **Intent** (why it exists, who has the problem) and **Behaviors & Acceptance Criteria** (observable outcomes, each labeled `AC{n}` — if it isn't listed, it isn't promised). An optional **Implementation Notes** under Intent can hold the intended approach (intent, not status). Where the user is vague, ask; don't fill the gap with plausible invention.
 5. Press hard on **Out of Scope.** If the user hasn't named non-goals, prompt for them — this is where scope is held. Don't refuse a spec that lacks it, but don't let it pass silently either.
-6. Capture **Dependencies**, **Testing**, **Constraints & Decisions** (boundaries plus a dated decision log), and **Open Questions & Assumptions** as they surface. Omit any section that genuinely doesn't apply yet. Park uncertainty there rather than resolving it yourself.
+6. Capture **Dependencies** (link any specs you name as markdown links, never bare `code-style` names), **Testing**, **Constraints & Decisions** (boundaries plus a dated decision log), and **Open Questions & Assumptions** as they surface. Omit any section that genuinely doesn't apply yet. Park uncertainty there rather than resolving it yourself.
 
 ## Authoring product docs
 

@@ -19,6 +19,10 @@ cd "$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 rm -rf "skills/eidos/templates"
 cp -R "templates" "skills/eidos/templates"
 
+# eidos-format reshapes a draft into the spec shape, reading the template for the target.
+rm -rf "skills/eidos-format/templates"
+cp -R "templates" "skills/eidos-format/templates"
+
 # eidos-init scaffolds a new registry from the templates, following the contract.
 rm -rf "skills/eidos-init/templates"
 cp -R "templates" "skills/eidos-init/templates"
@@ -31,4 +35,4 @@ cp -R "versions" "skills/eidos-migrate/versions"
 cp "CHANGELOG.md" "skills/eidos-migrate/CHANGELOG.md"
 cp "EIDOS.md" "skills/eidos-migrate/EIDOS.md"
 
-echo "✓ copied templates -> eidos + eidos-init, versions + CHANGELOG -> eidos-migrate, EIDOS.md -> init + migrate"
+echo "✓ copied templates -> eidos + eidos-format + eidos-init, versions + CHANGELOG -> eidos-migrate, EIDOS.md -> init + migrate"
