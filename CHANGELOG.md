@@ -2,9 +2,11 @@
 
 All notable changes to the Eidos standard are documented in this file.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html). The current version of the standard always lives in `EIDOS.md`; each prior released version is frozen in `versions/` under its full semver name.
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html). The current version of the standard always lives in `EIDOS.md`; when a version is tagged, that `EIDOS.md` is copied into `versions/` under its full semver name.
 
 ## [Unreleased]
+
+## [2.1.0] - 2026-06-18
 
 ### Added
 
@@ -72,6 +74,7 @@ Initial published version of the Eidos standard. The normative definition lives 
 
 - The blank `product/` scaffold. Authors copy `example/` (or run the skill) instead of filling empty templates checked into the standard's repo.
 
-[Unreleased]: https://gitlab.com/the-virtual-panda/Eidos/-/compare/v2.0.0...HEAD
+[Unreleased]: https://gitlab.com/the-virtual-panda/Eidos/-/compare/v2.1.0...HEAD
+[2.1.0]: https://gitlab.com/the-virtual-panda/Eidos/-/compare/v2.0.0...v2.1.0
 [2.0.0]: https://gitlab.com/the-virtual-panda/Eidos/-/compare/v1.0.0...v2.0.0
 [1.0.0]: https://gitlab.com/the-virtual-panda/Eidos/-/tags/v1.0.0

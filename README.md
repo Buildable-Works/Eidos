@@ -1,6 +1,6 @@
 # Eidos
 
-> **[Eidos v2.0.0](EIDOS.md)** — the full standard.
+> **[Eidos v2.1.0](EIDOS.md)** — the full standard.
 
 A markdown spec registry for defining what a product _is_. One file completely defines one unit of a product, true whether or not the thing has been built. Specs live as plain `.md` files next to your code. No SaaS. No lock-in. No hidden state.
 
@@ -110,7 +110,7 @@ A skill is just a folder with a `SKILL.md`. Run `./scripts/sync-skills.sh` to ma
 
 ## Versioning
 
-The standard is versioned with [Semantic Versioning](https://semver.org/). The current version is in [`EIDOS.md`](EIDOS.md); history and migrations are in [`CHANGELOG.md`](CHANGELOG.md); prior versions are preserved in [`versions/`](versions/) under their full semver names.
+The standard is versioned with [Semantic Versioning](https://semver.org/). The current version is in [`EIDOS.md`](EIDOS.md); history and migrations are in [`CHANGELOG.md`](CHANGELOG.md). Each release is preserved in [`versions/`](versions/) under its full semver name — `EIDOS.md` copied in as-is when the version is tagged.
 
 ## License
 

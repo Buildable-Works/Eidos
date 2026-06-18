@@ -6,7 +6,7 @@ domain:
 status: [Draft | Intake | In Progress | Done | Archived | Deprecated]
 created:
 modified:
-eidos_version: 2.0.0
+eidos_version: 2.1.0
 owner:
 depends_on: []
 tags: []

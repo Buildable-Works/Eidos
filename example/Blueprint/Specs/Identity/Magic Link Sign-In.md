@@ -6,7 +6,7 @@ domain: Identity
 status: Intake
 created: 2026-06-11
 modified: 2026-06-17
-eidos_version: 2.0.0
+eidos_version: 2.1.0
 owner: brenton
 depends_on: [email-delivery]
 tags: [auth, onboarding]

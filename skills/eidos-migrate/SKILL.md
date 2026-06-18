@@ -22,7 +22,7 @@ Migration needs the version snapshots, the changelog's migration notes, and the 
 - **This skill's own `versions/`, `CHANGELOG.md`, and `EIDOS.md`** — present when the skill was made standalone by `scripts/sync-skills.sh`. These are gitignored, so run that script first if they're missing.
 - **The repo's top-level files** — when working inside the standard's own repo.
 
-`versions/vX.Y.Z.md` is a frozen snapshot of every prior released standard; `CHANGELOG.md` holds the per-version migration notes; `EIDOS.md` is the current standard and the usual target. A migration needs both endpoints — the source's snapshot (or its changelog notes) and the target. If a needed snapshot is missing, say so; never fabricate a version's contract.
+`versions/vX.Y.Z.md` is a frozen snapshot of each released standard (`EIDOS.md` copied in when that version was tagged); `CHANGELOG.md` holds the per-version migration notes; `EIDOS.md` is the current standard and the usual target. A migration needs both endpoints — the source's snapshot (or its changelog notes) and the target. If a needed snapshot is missing, say so; never fabricate a version's contract.
 
 ## Procedure
 

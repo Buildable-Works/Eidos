@@ -4,7 +4,7 @@ title: Market Template
 tags: [eidos, meta, template, market]
 created:
 modified:
-eidos_version: 2.0.0
+eidos_version: 2.1.0
 ---
 
 # Market

@@ -4,7 +4,7 @@ title: Architecture Template
 tags: [eidos, meta, template, architecture]
 created:
 modified:
-eidos_version: 2.0.0
+eidos_version: 2.1.0
 ---
 
 # Architecture

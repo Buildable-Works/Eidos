@@ -1,7 +1,9 @@
-# Prior versions
+# Versions
 
-Each released version of the Eidos standard is frozen here under its **full semver name** before `EIDOS.md` is edited in place — e.g. `v1.0.0.md`. Because every version is preserved, any two (even non-adjacent) can be diffed to migrate specs from one to another. See the `eidos-migrate` skill.
+Each released version of the Eidos standard is frozen here under its **full semver name**: when a version is tagged, `EIDOS.md` is copied in as-is (e.g. `v2.1.0.md`). Because every release is preserved, any two (even non-adjacent) can be diffed to migrate specs from one to another. See the `eidos-migrate` skill.
 
 - `v1.0.0.md` — the original standard: `product/` root, the pre-2.0.0 frontmatter contract (`last_validated`, `implements`, `serves_job`, `activity`, `supersedes`) and the single `Behavior` / `Constraints` / `Decisions` body.
+- `v2.0.0.md` — the breaking redesign: `Blueprint/` root, `created`/`modified`, `Behaviors & Acceptance Criteria` with `AC{n}`, merged `Constraints & Decisions`, `Dependencies` and `Testing`, and a default `Domains.md`.
+- `v2.1.0.md` — adds the readability and reference-as-links conventions (including `depends_on` as links) and an `## AI` operating section.
 
-The current version always lives in the top-level `EIDOS.md`. See `CHANGELOG.md` for history and migrations.
+The current version always lives in the top-level `EIDOS.md` (identical to the latest snapshot here until work on the next version begins). See `CHANGELOG.md` for history and migrations.
