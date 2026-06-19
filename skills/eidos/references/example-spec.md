@@ -6,7 +6,7 @@ domain: Identity
 status: Intake
 created: 2026-06-11
 modified: 2026-06-17
-owner: brenton
+owner: Brenton
 depends_on: [email-delivery]
 tags: [auth, onboarding]
 ---
@@ -63,5 +63,5 @@ Intend to reuse the existing `email-delivery` capability rather than stand up a 
 
 <!-- append-only; date optional but recommended -->
 
-- 2026-06-11: Email-only for v1; SMS rejected on carrier cost and deliverability. (brenton)
-- 2026-06-11: New link invalidates prior unused link, rather than allowing several live at once. (brenton)
+- 2026-06-11: Email-only for v1; SMS rejected on carrier cost and deliverability. (Brenton)
+- 2026-06-11: New link invalidates prior unused link, rather than allowing several live at once. (Brenton)

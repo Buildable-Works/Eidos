@@ -1,17 +1,16 @@
 ---
 type: system
-title: Architecture Template
-tags: [eidos, meta, template, architecture]
+title: Architecture
+tags: [architecture]
 created:
 modified:
-eidos_version: 2.1.0
 ---
 
 # Architecture
 
 The overarching shape of the product as a built system. One per product, at the product root as `Architecture.md`. When the detail outgrows a single file, expand into an optional `Arch/` folder and keep this doc as the map that points into it.
 
-This doc is suggestive, not prescriptive. The sections below are recommended. Keep what serves the product, drop what does not yet apply, add what is missing. See Core Overview on portability.
+This doc is suggestive, not prescriptive. The sections below are recommended. Keep what serves the product, drop what does not yet apply, add what is missing.
 
 > Delete this guidance block and the italic prompts as you fill the doc in.
 

@@ -1,38 +1,61 @@
 #!/usr/bin/env bash
 #
-# sync-skills.sh — copy the standard's assets into the skills so each one is
-# self-contained: it works installed as the plugin, or dropped on its own into a
-# project's (or ~/) .claude/skills/.
+# sync-skills.sh — copy the top-level canon into the skills that need it.
 #
-# Dirty but simple: it COPIES, it does not symlink. The copies are gitignored — the
-# canonical files live at the repo root and ship with the plugin (the skills read
-# them from ${CLAUDE_PLUGIN_ROOT} when installed). Run this after cloning, or before
-# packaging a skill for standalone use. Re-run whenever EIDOS.md, templates/,
-# versions/, or CHANGELOG.md changes.
+# The top-level files (EIDOS.md, standard-seed/, versions/, CHANGELOG.md) are the source of
+# truth and the public review surface. A distributed skill can't reach them: Claude Desktop
+# sandboxes each skill to its own folder, and a git-marketplace install ("/plugin marketplace
+# add …") ships only what is committed. So each skill carries a COMMITTED copy of what it needs,
+# kept in sync by this script — duplication is the price of the sandbox.
+#
+# Run after changing EIDOS.md, standard-seed/, versions/, or CHANGELOG.md, then commit the
+# updated copies. Pass --check to verify the copies are current WITHOUT writing (for CI or a
+# pre-commit hook); it exits non-zero if anything is stale.
+#
+# Skills that read the user's registry .eidos/ at runtime (eidos-format, eidos-property,
+# eidos-domains) carry nothing and are not touched.
 #
 set -euo pipefail
 cd "$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
-# eidos authors specs and product docs from the templates, so it carries a copy
-# to stay self-contained (e.g. Claude Desktop, which sandboxes each skill to its
-# own folder). In Claude Code it reads ${CLAUDE_PLUGIN_ROOT}/templates instead.
-rm -rf "skills/eidos/templates"
-cp -R "templates" "skills/eidos/templates"
+check=0
+[ "${1:-}" = "--check" ] && check=1
+stale=0
 
-# eidos-format reshapes a draft into the spec shape, reading the template for the target.
-rm -rf "skills/eidos-format/templates"
-cp -R "templates" "skills/eidos-format/templates"
+# sync_one <src> <dest>
+sync_one() {
+  local src="$1" dest="$2"
+  if [ "$check" -eq 1 ]; then
+    if ! diff -rq "$src" "$dest" >/dev/null 2>&1; then
+      echo "  ✗ stale: $dest"
+      stale=1
+    fi
+  else
+    rm -rf "$dest"
+    cp -R "$src" "$dest"
+    echo "  $src → $dest"
+  fi
+}
 
-# eidos-init scaffolds a new registry from the templates, following the contract.
-rm -rf "skills/eidos-init/templates"
-cp -R "templates" "skills/eidos-init/templates"
-cp "EIDOS.md" "skills/eidos-init/EIDOS.md"
+# eidos — the ruleset
+sync_one "EIDOS.md"      "skills/eidos/EIDOS.md"
 
-# eidos-migrate diffs prior versions and reads the changelog's migration notes,
-# so it carries the full version history to work when installed anywhere.
-rm -rf "skills/eidos-migrate/versions"
-cp -R "versions" "skills/eidos-migrate/versions"
-cp "CHANGELOG.md" "skills/eidos-migrate/CHANGELOG.md"
-cp "EIDOS.md" "skills/eidos-migrate/EIDOS.md"
+# eidos-init — the canonical seed it installs
+sync_one "standard-seed" "skills/eidos-init/standard-seed"
 
-echo "✓ copied templates -> eidos + eidos-format + eidos-init, versions + CHANGELOG -> eidos-migrate, EIDOS.md -> init + migrate"
+# eidos-migrate — the seed plus the full version history, to diff and upgrade
+sync_one "standard-seed" "skills/eidos-migrate/standard-seed"
+sync_one "versions"      "skills/eidos-migrate/versions"
+sync_one "CHANGELOG.md"  "skills/eidos-migrate/CHANGELOG.md"
+sync_one "EIDOS.md"      "skills/eidos-migrate/EIDOS.md"
+
+if [ "$check" -eq 1 ]; then
+  if [ "$stale" -eq 0 ]; then
+    echo "✓ skill copies are in sync with the top-level canon"
+  else
+    echo "✗ skill copies are stale — run: scripts/sync-skills.sh" >&2
+    exit 1
+  fi
+else
+  echo "✓ synced the canon into eidos, eidos-init, and eidos-migrate"
+fi

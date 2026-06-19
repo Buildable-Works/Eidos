@@ -1,17 +1,16 @@
 ---
 type: system
-title: Criteria Template
-tags: [eidos, meta, template, criteria]
+title: Criteria
+tags: [criteria]
 created:
 modified:
-eidos_version: 2.1.0
 ---
 
 # Criteria
 
 The frame that decides and audits scope: what the product can afford, what it is trying to be, and by when. One per product, at the product root as `Criteria.md`. Paired with Audience, this is what a spec is measured against. When scope creeps, it creeps past this doc.
 
-A point-in-time snapshot. It captures intent as it stands today and is expected to evolve. Record what is true now; revise when it changes. Suggestive, not prescriptive. See Core Overview on portability.
+A point-in-time snapshot. It captures intent as it stands today and is expected to evolve. Record what is true now; revise when it changes. Suggestive, not prescriptive.
 
 > Delete this guidance block and the italic prompts as you fill the doc in.
 

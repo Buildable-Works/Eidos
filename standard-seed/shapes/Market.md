@@ -1,17 +1,16 @@
 ---
 type: system
-title: Market Template
-tags: [eidos, meta, template, market]
+title: Market
+tags: [market]
 created:
 modified:
-eidos_version: 2.1.0
 ---
 
 # Market
 
 Where the product sits in its marketplace, why it is not just another one of many, and how it is intended to make money. One per product, at the product root as `Market.md`. This doc answers the two questions a product has to survive: why would anyone pick this, and how does it earn.
 
-A point-in-time snapshot of positioning and intent. Markets move; revise when they do. Suggestive, not prescriptive. See Core Overview on portability.
+A point-in-time snapshot of positioning and intent. Markets move; revise when they do. Suggestive, not prescriptive.
 
 > Delete this guidance block and the italic prompts as you fill the doc in.
 

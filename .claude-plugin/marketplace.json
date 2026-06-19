@@ -1,11 +1,11 @@
 {
   "name": "eidos",
-  "owner": { "name": "Brenton Unger II" },
+  "owner": { "name": "Buildable" },
   "plugins": [
     {
       "name": "eidos",
       "source": "./",
-      "description": "The Eidos spec-registry standard plus its authoring, init, and migration skills."
+      "description": "A human-first methodology for defining what a product is — not what work to do. One markdown file completely defines one unit of the product, true whether or not it's been built, kept in version control beside the code."
     }
   ]
 }

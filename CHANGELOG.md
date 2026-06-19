@@ -6,6 +6,36 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [3.0.0] - 2026-06-19
+
+A breaking release that moves a registry's **form** — its body shapes and its property contract — out of the standard and into the registry itself, as a hidden `.eidos/` folder. Eidos becomes an opinionated baseline you can extend without forking: adopt as-is, add your own properties, still migrate.
+
+### Added
+
+- **The `.eidos/` form layer.** Every registry now owns its form in a hidden `.eidos/` at its root: `shapes/` (the body template for each kind of document), `Schema.md` (the property contract), and `Registry.md` (the Eidos version). Seeded by `eidos-init` from an opinionated baseline; the skills read it from there.
+- **`Schema.md` — a registry-defined property contract.** Two blocks: `## Eidos Canonical` (the standard's properties, managed by `eidos-migrate`) and `## Custom Registry Properties` (yours, preserved across migration). Each property declares name, type, required, and meaning. Property types are drawn from the Obsidian set — Text, List, Number, Checkbox, Date, Date & time — so frontmatter renders natively in an Obsidian vault.
+- **Generated frontmatter.** A spec's frontmatter is emitted from the Schema's required properties, so every new spec is born conforming.
+- **Registry-defined validation.** A check reads _that registry's_ Schema — canonical required plus any custom-required — and surfaces a missing field by adding it with a note on why, never refusing the file.
+- **`eidos-property` skill** — add, rename, or retire a custom property: it presses the owner to decide type, meaning, and whether it's required, writes the row into `Schema.md`, and backfills every existing spec.
+- **`eidos-domains` skill** — regenerate `Domains.md` as a navigation index: each domain's hand-written description plus a generated list of its specs (links + a one-line summary distilled from each spec's Intent). Makes `Domains.md` the map humans and agents read first instead of scraping the tree.
+- **`Registry.md`** — records the Eidos version in one spot, read and bumped by `eidos-migrate`.
+
+### Changed
+
+- **Skills consume the registry's form instead of vendoring templates.** The canonical baseline lives, public and front-facing, in the top-level `standard-seed/`; `eidos-init` installs it, and `eidos`, `eidos-format`, and `eidos-property` read the live `.eidos/` from the registry in the working directory. The old template triplication is gone; the three skills that need the standard (`eidos`, `eidos-init`, `eidos-migrate`) carry committed copies of just what they need, kept in sync by `scripts/sync-skills.sh`, so a git-marketplace install works on Claude Code and sandboxed Claude Desktop alike.
+- **"Works from `EIDOS.md` alone" is retired.** `EIDOS.md` gives the method; doing Eidos now needs the skills and a seeded registry. The `## AI` section and the "templates ship with the standard" guidance were rewritten accordingly.
+- **Body shapes** moved from the top-level `templates/` into `.eidos/shapes/`. The Spec shape is body-only (frontmatter is generated); the product-doc shapes keep their own light frontmatter. The baseline section set is unchanged from 2.1.
+- **The canonical baseline is a public, top-level `standard-seed/`.** The seed (shapes + `Schema.md` + `Registry.md`) is browsable at the repo root, not tucked inside a skill; `eidos-init` installs it, and `eidos-migrate` reads it.
+- **The `eidos` skill is lean and defers to `EIDOS.md`.** It holds the facilitation flow and reads the registry's `.eidos/`, and points to `EIDOS.md` — the officially maintained ruleset, carried as a committed copy in the skill — instead of restating the rules. Its `core-overview.md` and `spec-schema.md` references were removed as duplicative; `example-spec.md` stays.
+- **`Domains.md` became the registry's navigation map** — each domain's description plus a generated per-spec index — rather than descriptions alone. The body-section catalog was also pulled out of `EIDOS.md` into the Spec shape, leaving `EIDOS.md` with the rules for using a body, not the section list.
+
+### Removed
+
+- **The per-doc `eidos_version` frontmatter field** — the version is a registry fact now, in `.eidos/Registry.md`.
+- **The top-level `templates/` folder** and **`scripts/sync-skills.sh`** — replaced by the seed in `eidos-init` and the registry's own `.eidos/`.
+
+**Migration from 2.x:** use the `eidos-migrate` skill, or diff `versions/v2.1.0.md` against `EIDOS.md`. The net per registry is small: install `.eidos/` from the v3 seed (shapes, canonical `Schema.md`, `Registry.md`), drop `eidos_version` from every spec and product doc, and write `**Eidos Version:** 3.0.0` into `.eidos/Registry.md`. The body section set is unchanged, so specs need no restructuring.
+
 ## [2.1.0] - 2026-06-18
 
 ### Added
@@ -74,7 +104,8 @@ Initial published version of the Eidos standard. The normative definition lives 
 
 - The blank `product/` scaffold. Authors copy `example/` (or run the skill) instead of filling empty templates checked into the standard's repo.
 
-[Unreleased]: https://gitlab.com/the-virtual-panda/Eidos/-/compare/v2.1.0...HEAD
-[2.1.0]: https://gitlab.com/the-virtual-panda/Eidos/-/compare/v2.0.0...v2.1.0
-[2.0.0]: https://gitlab.com/the-virtual-panda/Eidos/-/compare/v1.0.0...v2.0.0
-[1.0.0]: https://gitlab.com/the-virtual-panda/Eidos/-/tags/v1.0.0
+[Unreleased]: https://github.com/BuildableWorks/Eidos/compare/v3.0.0...HEAD
+[3.0.0]: https://github.com/BuildableWorks/Eidos/compare/v2.1.0...v3.0.0
+[2.1.0]: https://github.com/BuildableWorks/Eidos/compare/v2.0.0...v2.1.0
+[2.0.0]: https://github.com/BuildableWorks/Eidos/compare/v1.0.0...v2.0.0
+[1.0.0]: https://github.com/BuildableWorks/Eidos/releases/tag/v1.0.0

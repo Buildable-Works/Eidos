@@ -1,17 +1,16 @@
 ---
 type: system
-title: Audience Template
-tags: [eidos, meta, template, audience]
+title: Audience
+tags: [audience]
 created:
 modified:
-eidos_version: 2.1.0
 ---
 
 # Audience
 
 Who the product is for, and how each kind of person interacts with it differently. One per product, at the product root as `Audience.md`. This doc and Criteria are the two that decide scope: a spec that serves no one here, or serves a type that does not exist here, is a spec to question.
 
-Keep it to simple blocks of prose. No tables, no personas with stock photos. Just plain description. Suggestive, not prescriptive. See Core Overview on portability.
+Keep it to simple blocks of prose. No tables, no personas with stock photos. Just plain description. Suggestive, not prescriptive.
 
 > Delete this guidance block and the italic prompts as you fill the doc in.
 
