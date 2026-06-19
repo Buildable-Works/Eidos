@@ -6,11 +6,11 @@ domain: Library
 status: Intake
 created: 2026-06-16
 modified: 2026-06-17
-eidos_version: 2.1.0
-owner: brenton
+owner: Brenton
 depends_on:
   - "[Session Management](../Identity/Session%20Management.md)"
 tags: [capture, reading]
+beta: true
 ---
 
 # Saved Articles
@@ -72,5 +72,5 @@ Intend to acknowledge a save by persisting the URL synchronously, then hand fetc
 
 <!-- append-only; date optional but recommended -->
 
-- 2026-06-16: Acknowledge the save before fetching, so capture always feels instant. (brenton)
-- 2026-06-16: Failed fetches degrade to a link rather than rejecting the save. (brenton)
+- 2026-06-16: Acknowledge the save before fetching, so capture always feels instant. (Brenton)
+- 2026-06-16: Failed fetches degrade to a link rather than rejecting the save. (Brenton)

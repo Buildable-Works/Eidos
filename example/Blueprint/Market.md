@@ -4,7 +4,6 @@ title: Market
 tags: [eidos, product, market]
 created: 2026-06-16
 modified: 2026-06-17
-eidos_version: 2.1.0
 ---
 
 # Market

@@ -6,11 +6,11 @@ domain: Identity
 status: Intake
 created: 2026-06-16
 modified: 2026-06-17
-eidos_version: 2.1.0
-owner: brenton
+owner: Brenton
 depends_on:
   - "[Magic Link Sign-In](Magic%20Link%20Sign-In.md)"
 tags: [auth, session]
+beta: true
 ---
 
 # Session Management
@@ -65,4 +65,4 @@ Intend to keep sessions as server-side records keyed by an opaque cookie token. 
 
 <!-- append-only; date optional but recommended -->
 
-- 2026-06-16: Inactivity expiry over fixed-lifetime sessions, to match infrequent readers. (brenton)
+- 2026-06-16: Inactivity expiry over fixed-lifetime sessions, to match infrequent readers. (Brenton)

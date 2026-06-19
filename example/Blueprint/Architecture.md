@@ -4,7 +4,6 @@ title: Architecture
 tags: [eidos, product, architecture]
 created: 2026-06-16
 modified: 2026-06-17
-eidos_version: 2.1.0
 ---
 
 # Architecture
