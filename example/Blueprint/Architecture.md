@@ -3,28 +3,29 @@ type: system
 title: Architecture
 tags: [eidos, product, architecture]
 created: 2026-06-16
-modified: 2026-06-17
+modified: 2026-06-23
 ---
 
 # Architecture
 
 ## Shape
 
-Marginalia is a single web application backed by one relational database. A user signs in by email, saves articles from anywhere via a browser extension or a paste box, and the app fetches and stores a readable copy. Teams share a library; members annotate and reply. The whole system is a Rails-style monolith behind a CDN, with a background worker for article fetching.
+This registry defines a **small subset of YouTube**: watching videos, resuming where you left off, running a channel, and subscribing to one. It is a web and mobile client over a handful of services — a catalog of videos and channels, an upload-and-transcode pipeline, a CDN that delivers the bytes, and a per-viewer store for playback state. The recommendation feed, comments, ads, and Shorts are deliberately out of this subset.
 
 ## Components
 
-- **Web app** — server-rendered pages plus a thin client for inline annotation. Owns sessions, rendering, and all user-facing routes.
-- **Article fetcher** — a background worker that retrieves a URL, extracts readable content, and stores a snapshot. Isolated so a slow or hostile site can't block a request.
-- **Library store** — the relational database: users, teams, saved articles, annotations, and replies.
-- **Browser extension** — a small client that posts a URL to the save endpoint. No logic beyond capture and auth handoff.
+- **Client + player** — the web and mobile app. Owns the watch page, the player (play/pause/seek, quality), the channel page, and sign-in. Plays adaptive streams; it does not store video.
+- **Catalog** — the source of truth for videos and channels: titles, descriptions, ownership, subscription edges, view counts.
+- **Upload & transcode pipeline** — ingests a creator's source file, transcodes it into the streaming renditions, and publishes the result to the catalog when ready. Asynchronous by design.
+- **Delivery (CDN)** — serves the transcoded segments to the player from the edge. The catalog hands the player signed URLs; the bytes never touch the app server.
+- **Playback store** — per-viewer state: the furthest-watched position per video, for [Resume Playback](Specs/Playback/Resume%20Playback.md).
 
 ## Data and flow
 
-A save request carries a URL and a session. The web app records the article row, enqueues a fetch job, and returns immediately. The fetcher resolves the URL, extracts content, and writes the snapshot back. Reads (library, article, thread) are served directly from the store. Annotations write straight through; there is no eventual-consistency layer.
+A watch starts with the client asking the catalog for a video; the catalog returns metadata plus signed CDN URLs, and the player streams segments from the edge, adapting quality to the connection. An upload runs the other way: the client sends a source file to the pipeline, which transcodes asynchronously and writes the finished renditions back to the catalog, flipping the video to published. Subscriptions and playback position are small writes straight to the catalog and the playback store.
 
 ## Boundaries and dependencies
 
-- **Email delivery** is external (a transactional email provider); sign-in depends on it.
-- **Article source sites** are untrusted third parties; the fetcher treats every response as hostile input.
-- The browser extension depends on the web app's save and auth endpoints; it ships on each browser's store on that store's review cadence.
+- **Video delivery** is the CDN's job; the app never streams bytes itself, and a slow edge degrades quality, not availability.
+- **Transcoding** is a background concern — a creator's upload is accepted before it is watchable, and the pipeline can be slow without blocking the client.
+- **Source uploads** are untrusted input: the pipeline validates and sandboxes every file.

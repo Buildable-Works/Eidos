@@ -3,25 +3,25 @@ type: system
 title: Audience
 tags: [eidos, product, audience]
 created: 2026-06-16
-modified: 2026-06-17
+modified: 2026-06-23
 ---
 
 # Audience
 
 ## Audience
 
-Marginalia is for small teams that read for their work and want to read together: research groups, product teams, editorial desks. The people are knowledge workers who already save links somewhere (a chat channel, a notes app, a pile of tabs) and have felt that pile become useless. They are comfortable in a browser and want capture to be one click and recall to be reliable.
+The subset serves the two sides of a video platform: people who **watch** and people who **publish**. Watchers arrive with a link or open the app to catch up on channels they follow; they expect a video to start fast and pick up where they left off. Publishers are creators who upload to a channel and want the upload to "just work" without thinking about formats or devices. Most people are signed in, but a video opened from a shared link must play for someone who isn't.
 
 ## User types
 
-### Reader
+### Viewer
 
-Here to capture and read. Saves an article in one action and trusts it will still be there, readable, later. Annotates in the margin as they go. Comes back to a clean library, not a feed. Ignores anything administrative.
+Here to watch. Opens a video, plays it, and trusts it resumes where they stopped. Subscribes to channels to follow new uploads. Signed in on their own devices; sometimes arrives signed-out from a shared link and still expects playback to work.
 
-### Curator
+### Creator
 
-The person who shapes a team's library: organizes domains, prunes, and starts the threads others reply to. Interacts with the same surfaces as a Reader but cares about structure and signal across the whole library, not just their own saves.
+Runs a channel and uploads to it. Cares that an upload publishes reliably across devices and qualities, and that subscribers can find the result. Interacts with the watch surfaces too, but their distinctive need is publishing.
 
-### Admin
+### Moderator
 
-Manages who is on the team and how billing works. Reaches for the product rarely and only for membership and account settings. Does not necessarily read or annotate at all.
+Keeps the catalog within policy — reviews flagged uploads and channels. Reaches for the product rarely and through different surfaces than viewers or creators; does not upload or subscribe in the course of the job.

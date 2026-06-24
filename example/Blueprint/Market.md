@@ -3,29 +3,29 @@ type: system
 title: Market
 tags: [eidos, product, market]
 created: 2026-06-16
-modified: 2026-06-17
+modified: 2026-06-23
 ---
 
 # Market
 
 ## Landscape
 
-The read-it-later category is crowded and mature: Pocket, Instapaper, Readwise Reader, and a long tail of bookmark tools, plus the default substitutes most teams actually use — a shared chat channel, a notes app, or browser bookmarks. Incumbents are strong at solo capture and reading; the shared-team angle is thinly served.
+Online video splits across broad creator platforms (YouTube itself), short-form (TikTok, Reels), live (Twitch), and creator hosting (Vimeo). This subset sits in the **broad, on-demand, creator-uploaded** lane: anyone can publish, anyone can watch, and the catalog is the product.
 
 ## Competitors
 
-- **Pocket / Instapaper** — polished solo read-it-later; no real team library or shared annotation. They set the bar for capture and reading, not for working together.
-- **Readwise Reader** — strong highlights and review for individuals; sharing is secondary and pricing targets the power-reader, not the team.
-- **A shared chat channel or notes app** — the real default. Free and already in use, but links rot, nothing is readable later, and discussion scrolls away. The substitute to beat.
+- **TikTok / Reels** — short-form, feed-first, algorithm-driven. They own attention but not the durable channel-and-catalog model this subset is built around.
+- **Twitch** — live-first, with on-demand as a byproduct. Strong community tools; not the place for a polished uploaded back-catalog.
+- **Vimeo** — creator hosting and quality, aimed at professionals and businesses; reach and discovery are secondary, where here they are the point.
 
 ## Positioning & Differentiators
 
-Marginalia is a read-it-later tool whose unit is the **team**, not the individual. The concrete difference a user feels: when you save an article, your teammates see it, and annotations are a shared margin you reply to in place. Solo tools bolt sharing on as an afterthought; here the library is collective from the first save.
+The unit is the **channel and its catalog**: a creator builds a durable body of work, and viewers subscribe to follow it. Reliable playback (start fast, resume anywhere, any device) and frictionless publishing are the felt differentiators over short-form feeds and live platforms.
 
 ## Who it is for and against
 
-It wins small teams that read together and have outgrown a links channel, taking them from generic chat/notes substitutes rather than from solo reading apps. It does not try to win the solo power-reader who is well served by Reader or Instapaper.
+It wins creators who want a lasting, subscribable catalog and the viewers who follow them. It does not chase the short-form feed or live streaming — those are different products with different rhythms.
 
 ## Earning Capabilities
 
-Per-seat subscription billed monthly or annually to the team, after a beta period. Pricing assumes a handful of seats per team. The model works only if shared annotation drives enough day-to-day use that a team keeps paying past month one, which is why launch is gated on retention rather than signups.
+Out of scope for this cut, but the model it is built toward is advertising against watch time plus an ad-free subscription — which is why delivery cost (egress) is treated as a first-class constraint from the start, even before any revenue surface exists.

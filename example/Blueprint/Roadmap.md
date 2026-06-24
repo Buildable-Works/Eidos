@@ -3,27 +3,27 @@ type: system
 title: Roadmap
 tags: [eidos, product, roadmap]
 created: 2026-06-19
-modified: 2026-06-19
+modified: 2026-06-23
 ---
 
 # Roadmap
 
-Where Marginalia is headed, in plain horizons. A point-in-time view that moves as the product and the market do — not a shape and not a spec, but a top-level doc the team keeps current by editing in place. It exists to show the shape of a **custom top-level doc**: free-form, with no template behind it.
+Where this YouTube subset is headed, in plain horizons — a point-in-time view, not a backlog. It exists to show a **custom top-level doc**: free-form, with no shape behind it.
 
 ## Now
 
-Closing the loop on the private beta — shared libraries and in-margin annotation, and the retention signal the [Market](Market.md) bets on. The units themselves are specced under the Identity and Library domains (see [Domains](Domains.md)); this section is the framing, not the backlog.
+The watchable, publishable core: [Watch a Video](Specs/Playback/Watch%20a%20Video.md), [Resume Playback](Specs/Playback/Resume%20Playback.md), [Upload a Video](Specs/Channels/Upload%20a%20Video.md), and [Subscribe to a Channel](Specs/Channels/Subscribe%20to%20a%20Channel.md). Getting upload-to-watchable reliable across devices is the whole game this cycle.
 
 ## Next
 
-- **Team digests** — a weekly roll-up of what the team saved and argued about, to pull readers back without a notification treadmill.
-- **Search across the shared library** — once there is enough saved to be worth searching.
+- **A subscriptions feed** — a home surface of recent uploads from the channels you follow, once there are enough channels to make it worth building.
+- **Comments** — discussion under a video; deliberately held until watching and publishing are solid.
 
 ## Later
 
-- **Public, read-only shelves** — let a team publish a curated reading list outside the paywall, as a quiet top-of-funnel.
-- **An API** — only if a partner pulls for it; noted here so it is not mistaken for a near-term promise.
+- **Recommendations** — algorithmic discovery beyond your subscriptions; the largest surface, and the one most easily mistaken for a near-term promise.
+- **A revenue surface** — ads against watch time and an ad-free subscription; noted here so the delivery-cost work in [Criteria](Criteria.md) reads as deliberate, not premature.
 
 ## Explicitly not on the roadmap
 
-Solo power-reader features — offline queues, deep highlight review — are the ground the [Market](Market.md) deliberately cedes to Reader and Instapaper. Naming it here keeps it from creeping back in as "just one more feature."
+Short-form (a Shorts-style feed) and live streaming. They are different products with different rhythms (see [Market](Market.md)); naming them here keeps them from creeping back in as "just one more feed."
