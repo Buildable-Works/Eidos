@@ -2,11 +2,11 @@
 
 _**εἶδος** (eidos), Greek — the form or essence of a thing: the look that makes it what it is. Plato's eternal Form; Aristotle's essence behind the matter._
 
-> **[Eidos v3.1.0](EIDOS.md)** — the full standard.
+> **[Eidos v4.0.0](EIDOS.md)** — the full standard.
 
-A markdown spec registry for defining what a product _is_. One file completely defines one unit of a product, true whether or not the thing has been built. Specs live as plain `.md` files next to your code. No SaaS. No lock-in. No hidden state.
+A markdown registry for defining what a product _is_. One file completely defines one unit of the product — a **spec**, in the common case — true whether or not the thing has been built. The files live as plain `.md` next to your code. No SaaS. No lock-in. No hidden state.
 
-A **spec** captures **state and intent, not work**. Tasks describe work and die when the work ships; a spec describes the product and stays accurate across its whole life: drafted, built, deprecated.
+A unit captures **state and intent, not work**. Tasks describe work and die when the work ships; a unit describes the product and stays accurate across its whole life: drafted, built, deprecated.
 
 Eidos is **human-first**. A product owner holds the intent, the scope, and the decisions. An agent — via the `eidos` skill — facilitates: it formats, supplements, asks clarifying questions, and presses on scope. It does **not** author specs for you. A spec no one thought through is worse than none.
 
@@ -16,27 +16,36 @@ Product knowledge rots in tickets, wikis, and people's heads. Eidos keeps the au
 
 ## How it works
 
-Drop a `Blueprint/` folder into any repo:
+A **registry** is one product's definition — a `Blueprint/` folder you drop into any repo. Everything Eidos defines is built from a few pieces:
 
 ```txt
-Blueprint/
-  .eidos/             # the form layer: shapes, Schema, Registry (hidden)
-  Architecture.md     # overarching system shape
-  Audience.md         # who it serves and how each type interacts
-  Criteria.md         # budget, scope objectives, timeline
-  Market.md           # where it sits, how it differs, how it earns
-  Domains.md          # the domains as a navigable map of the specs; present by default
-  Specs/
-    <Domain>/
-      <Title>.md      # one spec per unit, grouped by domain
+Blueprint/                 # the registry — one product's definition
+  README.md                # the human "start here"
+  .eidos/                  # the form layer (hidden) — how this registry is shaped
+    shapes/                #   collection body shapes, one per flavor
+    templates/             #   one-of-each top-level-doc templates
+    personas/              #   how the agent should talk to each role
+    Schema.md              #   the frontmatter contract (properties)
+    Registry.md            #   the index + config: version, naming, top-level docs, collections
+    user.md                #   who's in the seat (personal, gitignored)
+  Architecture.md  Audience.md  Criteria.md  Market.md   # top-level docs
+  Specs/                   # a collection — units grouped into sub-folders
+    index.md               #   generated index of the collection
+    <Group>/<Title>.md     #   one unit per file
 ```
 
-- **Product docs** are four files — one of each — that frame the whole product, plus any free-form top-level docs you add yourself (a Roadmap, a Vision).
-- **Specs** are the many, one per unit, grouped into `<Domain>/` folders. Every spec shares one shape — Intent, Behaviors & Acceptance Criteria, Out of Scope, and the rest, used as they apply; the frontmatter is the firm part, the body is guidance you keep what you need of.
-- **The form layer** — a hidden `.eidos/` holds the registry's shapes (the body template for each kind of doc) and its `Schema.md` (the property contract: an Eidos-canonical baseline plus any custom properties you add). It's seeded with an opinionated default — public and browsable in [`standard-seed/`](standard-seed) — that you can extend without forking the standard, and it's committed alongside the specs, not gitignored.
-- Human-facing names follow a **naming convention you pick at init** — Title Case (default), TitleCase, or kebab-case — so the tree reads like a table of contents (and scripts cleanly if you want it to); the `id` inside each spec — lowercase words joined by hyphens — is its permanent reference.
+- **Registry** — the whole product definition, located by its hidden `.eidos/` folder. [`.eidos/Registry.md`](standard-seed/Registry.md) is its **index and config**: the Eidos version, the naming convention, the list of top-level docs, and the collections. A visible `README.md` is the door into it.
+- **Top-level docs** — a few one-of-each documents that frame the whole product. Eidos ships four (Architecture, Audience, Criteria, Market); add your own (a Roadmap, a Vision). Loose prose, point-in-time — each canonical one scaffolded from a one-off **template** in `.eidos/templates/`.
+- **Collections** — folders of repeated units. A registry can have several, and each can group its units one level deep in sub-folders. A unit is a small **frontmatter** contract (the firm part) plus a **body** (guidance).
+- **Shapes & flavors** — a **shape** is the body template a *collection's* units follow (top-level docs use templates, not shapes); a collection can offer more than one — **flavors** — with one default (say a `full` shape and a lighter `micro`). Start in the flavor that fits and grow into a fuller one later.
+- **Schema** — the frontmatter contract every unit carries: an Eidos-canonical baseline plus any custom properties you add. Frontmatter is generated from it, so every unit is born conforming.
+- **Personas & the actor** — [`.eidos/personas/`](personas) say how the agent should talk to each kind of person (a designer gets experience terms; a developer, full technical depth); the personal, gitignored `.eidos/user.md` says who _you_ are, so the same registry answers each reader differently.
 
-The full rules are in **[EIDOS.md](EIDOS.md)**. See **[`example/`](example/)** for a filled-in product definition you can pattern-match against.
+The form layer is seeded with opinionated defaults — public and browsable in [`standard-seed/`](standard-seed) and [`personas/`](personas) — that you extend without forking the standard, committed alongside the content (except `user.md`).
+
+**`Specs` and `domains` are the default seed, not the essence.** Eidos starts you with a `Specs` collection grouped by `domain`, because most products begin there — but the machinery is collections, shapes, and flavors. A film team could define a `Scenes` collection grouped by `Act`, with `scene.full` and `scene.beat` flavors, and never write a "spec." Human-facing names follow a **naming convention you pick at init** (Title Case, TitleCase, or kebab-case); the kebab-case `id` inside each unit is its permanent reference.
+
+The full rules are in **[EIDOS.md](EIDOS.md)**. See **[`example/`](example/)** for a filled-in registry (a small subset of YouTube) to pattern-match against.
 
 ## Quick start
 
@@ -44,24 +53,26 @@ Use Eidos on your own project:
 
 1. **Get the skills. (optional)** Install `eidos` skills to help follow the spec, but it's easy enough to follow without it — see [Installing the skills](#installing-the-skills).
 2. **Initialize.** Run `eidos-init`: it installs the `.eidos/` form layer and scaffolds a `Blueprint/`, following the current `EIDOS.md` — or copy the example and modify its contents.
-3. **Fill the product docs.** Architecture, Audience, Criteria, Market — prose, loose, point-in-time; fill what's known, leave the rest. Describe each domain in `Domains.md` as specs accrue.
+3. **Fill the top-level docs.** Architecture, Audience, Criteria, Market — prose, loose, point-in-time; fill what's known, leave the rest. Describe each domain in the Registry's Collections section as specs accrue; the per-spec `Specs/index.md` is generated by `eidos-index`.
 4. **Author specs.** One file per unit under `Specs/<Domain>/`, named for its title in Title Case (`Magic Link Sign-In.md`). Each spec's frontmatter is generated from the registry's Schema; lead with Intent and Behaviors & Acceptance Criteria; press hard on **Out of Scope** — that's where scope is held. The `eidos` skill facilitates; it does not author for you.
-5. **Commit it.** Specs are the product definition — `.eidos/` form layer and all. Review them in PRs alongside code. Eidos relies on git history (`created`/`modified` dates, the Decisions log, scope drift), so do **not** gitignore them.
+5. **Commit it.** Specs are the product definition — `.eidos/` form layer and all (except the personal `.eidos/user.md`, which the seeded `.gitignore` keeps out). Review them in PRs alongside code. Eidos relies on git history (`created`/`modified` dates, the Decisions log, scope drift), so do **not** gitignore them.
 
 Doing Eidos needs the skills and a seeded registry: `EIDOS.md` gives the method, but the form a registry uses lives in its `.eidos/`. See [`example/`](example/) for a filled-in registry to pattern-match against.
 
 ## Installing the skills
 
-Eidos ships as a **Claude plugin** bundling six skills:
+Eidos ships as a **Claude plugin** bundling eight skills:
 
 - **`eidos`** — author + validate
-- **`eidos-format`** — reshape a rough draft into Eidos shape (a spec, a product doc, or a free-form top-level doc)
+- **`eidos-format`** — reshape a rough draft into Eidos shape (a collection item, a canonical top-level doc, or a free-form one)
 - **`eidos-init`** — scaffold a new registry (installs the `.eidos/` form layer)
-- **`eidos-property`** — add, rename, or retire a custom property and backfill the specs
-- **`eidos-domains`** — regenerate `Domains.md` as a navigation map of the specs
-- **`eidos-migrate`** — move specs to a new version
+- **`eidos-property`** — add, rename, or retire a custom property and backfill every item
+- **`eidos-registry`** — add a collection or a flavor, and keep the Registry's Top-Level index current
+- **`eidos-index`** — regenerate each collection's `index.md` listing
+- **`eidos-whoami`** — set who you are: pick a persona and calibrate it (role, experience, technical capacity)
+- **`eidos-migrate`** — move a registry to a new version
 
-Most skills read from your registry at runtime and need nothing of the standard: `eidos-format`, `eidos-property`, and `eidos-domains`. The other three carry a **committed copy** of just what they need — `eidos` (the `EIDOS.md` ruleset), `eidos-init` (the canonical [`standard-seed/`](standard-seed)), and `eidos-migrate` (the version history) — so each skill is self-contained wherever it's installed. `scripts/sync-skills.sh` keeps those copies in sync with the top-level sources.
+Most skills read from your registry at runtime and need nothing of the standard: `eidos-format`, `eidos-property`, `eidos-registry`, `eidos-index`, and `eidos-whoami`. The other three carry a **committed copy** of just what they need — `eidos` (the `EIDOS.md` ruleset), `eidos-init` (the canonical [`standard-seed/`](standard-seed)), and `eidos-migrate` (the version history) — so each skill is self-contained wherever it's installed. `scripts/sync-skills.sh` keeps those copies in sync with the top-level sources.
 
 ### Why the skills carry copies of the standard
 

@@ -6,6 +6,32 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [4.0.0] - 2026-06-23
+
+A breaking release that makes `.eidos/Registry.md` the registry's **index**, generalizes `Specs/` into declared **collections** with multiple body **flavors**, moves each collection's listing into a generated **`index.md`** inside its folder (retiring the top-level `Domains.md`), and adds a visible **`README.md`** "start here" plus a personal **`user.md`** actor file. A 3.x registry migrates with `eidos-migrate`; the per-spec contract is essentially unchanged, but the layout moves.
+
+### Added
+
+- **Collections.** A registry declares its top-level content folders in the Registry body, each with a description. `Specs` is the default; add more — decisions, personas, integrations — with `eidos-registry`. An item's collection is its top-level folder. A collection may group its items one level deep in sub-folders (Specs by domain); deeper nesting is discouraged.
+- **Flavors.** A collection can offer more than one body shape — a default `full` and a lighter `micro` — each a file named `<kind>.<flavor>.md` in `.eidos/shapes/`. A new optional canonical property, `flavor`, records which an item follows (absent = the collection's default); validation checks the body against that flavor's shape, so a `micro` spec isn't faulted for `full`-only sections. The canonical default flavor renames `Spec.md` → `spec.full.md`, with `spec.micro.md` beside it. Shapes are **collection-only** and live in `.eidos/shapes/`; the one-of-each top-level-doc scaffolds are now **templates** in `.eidos/templates/` (no flavors, not validated, kept as the record of each doc's intended full form).
+- **The Registry as index.** `.eidos/Registry.md` keeps its frontmatter (`eidos_version`, `naming`) and gains a body: a `## Top-Level` list of the top-level documents and a `## Collections` section with each collection's flavors and grouping. It is the authoritative index of the whole registry.
+- **`README.md` start-here.** A thin, visible `README.md` at the registry root is the human front door — what the product is, with pointers into the registry — pointing into the hidden `Registry.md`. `eidos-init` seeds it from `standard-seed/README.template.md`.
+- **Per-collection `index.md`.** Each collection carries a generated `index.md` leaf inside its folder — the item listing, grouped by sub-folder when present, flat otherwise. Fully generated (descriptions live in the Registry), so it rebuilds wholesale.
+- **Personas.** Default response contracts — `personas/`, installed into `.eidos/personas/` (committed, team-tunable) — one per role (Product Owner, Developer, Stakeholder, Designer, Project Manager). A persona sets the agent's vocabulary, technical depth, what it surfaces, and who decides: a Designer gets experience terms (no db indexes), a Developer full depth, the Product Owner the decisions. The agent reads the actor's persona before responding.
+- **The actor (`.eidos/user.md`) + `eidos-whoami` skill.** A personal, gitignored file that names the actor's persona and **calibrates** it — role for this product, experience with the scope, technical capacity. Set it with the new `eidos-whoami` skill (a guided who-are-you that `eidos-init` runs); unset or absent defaults to full, product-owner-style facilitation. It is the one `.eidos/` file not committed.
+- **`eidos-registry` skill** — add a collection or flavor and keep the Registry's Top-Level/Collections index current.
+
+### Changed
+
+- **Rule 7 reframed** — from "one shape per registry" to "one shape family per collection, declared as flavors." A flavor is a deliberate, registry-declared structural choice; `type` still drives views, never structure. New rules: the Registry is the index and `README.md` its door (21), read the actor before acting (22), each collection has a generated index (23). New **The actor**, **Collections**, **Flavors**, and **Collection indexes** sections in `EIDOS.md`; `## Overview` in the Registry body is now `## Top-Level`.
+- **`eidos-domains` → `eidos-index`.** The domain re-indexer generalizes to regenerate any collection's `index.md`, prompting which collections to re-index. `eidos`, `eidos-init`, `eidos-format`, and `eidos-registry` are updated for collections, flavors, the actor, and the new layout; the example registry gains a `micro`-flavored spec, a `Specs/index.md`, a `README.md`, and a committed `user.md`.
+
+### Removed
+
+- **The top-level `Domains.md`** and its shape. Its per-spec listing moves into `Specs/index.md` (one `index.md` per collection); the domain descriptions move up into the Registry's Collections section. This is the breaking change.
+
+**Migration from 3.x:** run `eidos-migrate`. Net per registry: add the optional `flavor` to the canonical Schema; rename `.eidos/shapes/Spec.md` → `spec.full.md` (optionally add `spec.micro.md`); move `Domains.md` → `Specs/index.md` (its descriptions lifted into the Registry); add the Registry body (Top-Level + Collections), a root `README.md`, `.eidos/personas/`, and `.eidos/user.md` with a `.eidos/.gitignore` (then `eidos-whoami` to set personas); bump `eidos_version` to `4.0.0`. The per-spec body and most frontmatter are unchanged.
+
 ## [3.1.0] - 2026-06-19
 
 An additive release. A registry now chooses how its files are named, the root folder is officially any name, and a registry can carry its own free-form top-level docs. Nothing here breaks an existing 3.0.0 registry — an unset naming convention defaults to today's Title Case.
@@ -121,7 +147,8 @@ Initial published version of the Eidos standard. The normative definition lives 
 
 - The blank `product/` scaffold. Authors copy `example/` (or run the skill) instead of filling empty templates checked into the standard's repo.
 
-[Unreleased]: https://github.com/BuildableWorks/Eidos/compare/v3.1.0...HEAD
+[Unreleased]: https://github.com/BuildableWorks/Eidos/compare/v4.0.0...HEAD
+[4.0.0]: https://github.com/BuildableWorks/Eidos/compare/v3.1.0...v4.0.0
 [3.1.0]: https://github.com/BuildableWorks/Eidos/compare/v3.0.0...v3.1.0
 [3.0.0]: https://github.com/BuildableWorks/Eidos/compare/v2.1.0...v3.0.0
 [2.1.0]: https://github.com/BuildableWorks/Eidos/compare/v2.0.0...v2.1.0
